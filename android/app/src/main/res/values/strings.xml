@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="accessibility_service_description">
+        Allows the LiveKit Remote Desk app to forward remote pointer taps,
+        gestures and text input from a paired controller to this device.
+        Only enable this when you intend to share your screen.
+    </string>
+</resources>
