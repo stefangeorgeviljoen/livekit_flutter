@@ -37,6 +37,10 @@ dependencies:
 
   # LiveKit Dart/Flutter SDK.
   livekit_client: ^2.4.0
+  flutter_webrtc: ^1.1.0
+
+  # Debug logging for LiveKit / WebRTC diagnostics.
+  logging: ^1.2.0
 
   # HTTP client for talking to the token endpoint.
   http: ^1.2.0

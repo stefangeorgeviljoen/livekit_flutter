@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:math';
 
@@ -134,6 +135,9 @@ class _HostScreenState extends State<HostScreen> with WidgetsBindingObserver {
       // platforms; request it defensively.
       if (Platform.isAndroid || Platform.isIOS) {
         await Permission.microphone.request();
+      }
+      if (Platform.isMacOS) {
+        await _ensureMacScreenRecordingPermission();
       }
 
       final settings = await SettingsStore.load();
@@ -280,7 +284,7 @@ class _HostScreenState extends State<HostScreen> with WidgetsBindingObserver {
     _focusSub = null;
     await _listener?.dispose();
     _listener = null;
-    await _session.dispose();
+    await _session.reset();
     if (Platform.isAndroid) {
       try {
         await _androidChannel.invokeMethod('stopScreenCaptureService');
@@ -350,6 +354,27 @@ class _HostScreenState extends State<HostScreen> with WidgetsBindingObserver {
         });
       }
     }
+  }
+
+  Future<void> _ensureMacScreenRecordingPermission() async {
+    final cg = DynamicLibrary.open(
+      '/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics',
+    );
+    final preflight = cg.lookupFunction<Bool Function(), bool Function()>(
+      'CGPreflightScreenCaptureAccess',
+    );
+    if (preflight()) return;
+
+    final request = cg.lookupFunction<Bool Function(), bool Function()>(
+      'CGRequestScreenCaptureAccess',
+    );
+    if (request()) return;
+
+    throw Exception(
+      'Screen Recording permission is required to use this Mac as a receiver. '
+      'Grant it in System Settings > Privacy & Security > Screen Recording, '
+      'then restart Mago Remote Control.',
+    );
   }
 
   void _onData(DataReceivedEvent ev) {

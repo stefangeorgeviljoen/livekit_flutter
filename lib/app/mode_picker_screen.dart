@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ModePickerScreen extends StatelessWidget {
@@ -5,9 +6,11 @@ class ModePickerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controllerOnly = defaultTargetPlatform == TargetPlatform.iOS;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('LiveKit Remote Desk'),
+        title: const Text('Mago Remote Control'),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -26,15 +29,17 @@ class ModePickerScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 24),
-              _ModeCard(
-                icon: Icons.desktop_windows,
-                title: 'Host (be controlled)',
-                subtitle:
-                    'Share this device\'s screen and accept remote input.\n'
-                    'Supported on Windows, macOS, Android.',
-                onTap: () => Navigator.pushNamed(context, '/host'),
-              ),
-              const SizedBox(height: 16),
+              if (!controllerOnly) ...[
+                _ModeCard(
+                  icon: Icons.desktop_windows,
+                  title: 'Host (be controlled)',
+                  subtitle:
+                      'Share this device\'s screen and accept remote input.\n'
+                      'Supported on Windows, macOS, Android.',
+                  onTap: () => Navigator.pushNamed(context, '/host'),
+                ),
+                const SizedBox(height: 16),
+              ],
               _ModeCard(
                 icon: Icons.mouse,
                 title: 'Controller (drive remote)',

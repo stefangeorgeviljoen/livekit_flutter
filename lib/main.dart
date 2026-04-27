@@ -93,7 +93,7 @@ class _RemoteDeskAppState extends State<RemoteDeskApp>
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'LiveKit Remote Desk',
+      title: 'Mago Remote Control',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.indigo,

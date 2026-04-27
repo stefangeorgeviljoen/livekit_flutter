@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = livekit_flutter
+PRODUCT_NAME = Mago Remote Control
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.livekitFlutter
+PRODUCT_BUNDLE_IDENTIFIER = com.remago.remotecontrol
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2026 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2026 Remago. All rights reserved.

@@ -6,13 +6,17 @@ import 'package:livekit_client/livekit_client.dart';
 class RoomSession {
   RoomSession();
 
-  final Room _room = Room(
-    roomOptions: const RoomOptions(adaptiveStream: true, dynacast: true),
-  );
+  Room _room = _createRoom();
   Room get room => _room;
 
   bool _connected = false;
   bool get isConnected => _connected;
+
+  static Room _createRoom() {
+    return Room(
+      roomOptions: const RoomOptions(adaptiveStream: true, dynacast: true),
+    );
+  }
 
   Future<void> connect({required String url, required String token}) async {
     await _room.connect(url, token);
@@ -37,5 +41,10 @@ class RoomSession {
       _connected = false;
     }
     await _room.dispose();
+  }
+
+  Future<void> reset() async {
+    await dispose();
+    _room = _createRoom();
   }
 }

@@ -151,7 +151,7 @@ class _ControllerScreenState extends State<ControllerScreen> {
     _touches.clear();
     await _listener?.dispose();
     _listener = null;
-    await _session.dispose();
+    await _session.reset();
     if (mounted) {
       setState(() {
         _connected = false;
